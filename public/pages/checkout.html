@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout | mbkFoods</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar scrolled" id="navbar" data-fixed="true">
+        <div class="container nav-content">
+            <a href="../index.html" class="logo">
+                <img src="../assets/logo.png" alt="mbkFoods Logo">
+            </a>
+            <ul class="nav-links">
+                <li><a href="../index.html" class="nav-link">Home</a></li>
+                <li><a href="home.html" class="nav-link">Menu</a></li>
+                <li><a href="about.html" class="nav-link">About Us</a></li>
+                <li><a href="contact.html" class="nav-link">Contact</a></li>
+            </ul>
+            <div class="nav-actions">
+                <a class="cart-icon" href="home.html" aria-label="View cart">
+                    <i class="fa-solid fa-bag-shopping fa-xl"></i>
+                    <span class="cart-count" id="cart-count">0</span>
+                </a>
+                <button class="mobile-menu-toggle" type="button" aria-label="Open navigation menu" aria-expanded="false">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="section-padding" style="margin-top: 40px;">
+        <div class="container">
+            <div class="checkout-grid">
+                <!-- Delivery Info -->
+                <div class="checkout-form-container">
+                    <h2>Delivery Details</h2>
+                    <form id="checkout-form" class="checkout-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="name">Full Name</label>
+                                <input type="text" id="name" required placeholder="John Doe">
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">Phone Number</label>
+                                <input type="tel" id="phone" required placeholder="+234 ...">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="address">Delivery Address</label>
+                            <textarea id="address" required placeholder="Street name, Building, Apartment number..."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="notes">Order Notes (Optional)</label>
+                            <textarea id="notes" placeholder="Extra spicy, no onions, etc."></textarea>
+                        </div>
+                        
+                        <h2 style="margin-top: 40px;">Payment Method</h2>
+                        <div class="payment-options">
+                            <label class="payment-card active">
+                                <input type="radio" name="payment" value="cod" checked>
+                                <div class="payment-info">
+                                    <i class="fa-solid fa-money-bill-wave"></i>
+                                    <span>Cash on Delivery</span>
+                                </div>
+                            </label>
+                            <label class="payment-card">
+                                <input type="radio" name="payment" value="card">
+                                <div class="payment-info">
+                                    <i class="fa-solid fa-credit-card"></i>
+                                    <span>Credit / Debit Card</span>
+                                </div>
+                            </label>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary btn-lg w-100" style="margin-top: 40px;">Place Your Order</button>
+                    </form>
+                </div>
+
+                <!-- Order Summary -->
+                <div class="order-summary">
+                    <h3>Order Summary</h3>
+                    <div id="summary-items" class="summary-items">
+                        <!-- Items will be populated here -->
+                    </div>
+                    <div class="summary-totals">
+                        <div class="total-row">
+                            <span>Subtotal</span>
+                            <span id="subtotal">₦0</span>
+                        </div>
+                        <div class="total-row">
+                            <span>Delivery Fee</span>
+                            <span>₦1,500</span>
+                        </div>
+                        <div class="total-row grand-total">
+                            <span>Total</span>
+                            <span id="grand-total">₦0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Success Modal -->
+    <div id="success-modal" class="modal">
+        <div class="modal-content">
+            <div class="success-icon"><i class="fa-solid fa-circle-check"></i></div>
+            <h2>Order Placed Successfully!</h2>
+            <p>Your delicious Nigerian meal is being prepared and will be with you shortly.</p>
+            <button class="btn btn-primary" id="return-home" type="button">Return to Home</button>
+        </div>
+    </div>
+
+    <!-- Standardized Footer -->
+    <footer class="section-padding">
+        <div class="container footer-content">
+            <div class="footer-brand">
+                <img src="../assets/logo.png" alt="mbkFoods Logo">
+                <p>Bringing gourmet Nigerian flavors to your doorstep with a touch of elegance.</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#"><i class="fa-brands fa-twitter"></i></a>
+                    <a href="#"><i class="fa-brands fa-facebook"></i></a>
+                </div>
+            </div>
+            <div class="footer-links">
+                <h4>Explore</h4>
+                <ul>
+                    <li><a href="home.html">Our Menu</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>Visit Us</h4>
+                <ul>
+                    <li>12 Adeola Hopewell St</li>
+                    <li>Victoria Island, Lagos</li>
+                    <li>Mon - Sat: 9am - 9pm</li>
+                    <li><a href="tel:+23480062536637">+234 800 MBK FOODS</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="container copyright">
+            <p>&copy; 2026 mbkFoods. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="../js/data.js"></script>
+    <script src="../js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const cart = JSON.parse(localStorage.getItem('mbk_cart')) || [];
+            const summaryContainer = document.getElementById('summary-items');
+            const subtotalEl = document.getElementById('subtotal');
+            const grandTotalEl = document.getElementById('grand-total');
+            const form = document.getElementById('checkout-form');
+            const modal = document.getElementById('success-modal');
+
+            const formatNaira = (amount) => {
+                return new Intl.NumberFormat('en-NG', {
+                    style: 'currency',
+                    currency: 'NGN',
+                    minimumFractionDigits: 0
+                }).format(amount).replace('NGN', '₦').trim();
+            };
+
+            if (cart.length === 0) {
+                window.location.href = 'home.html';
+                return;
+            }
+
+            // Render summary
+            summaryContainer.innerHTML = cart.map(item => `
+                <div class="summary-item">
+                    <span>${item.name} x ${item.quantity}</span>
+                    <span>${formatNaira(item.price * item.quantity)}</span>
+                </div>
+            `).join('');
+
+            const subtotal = cart.reduce((acc, item) => acc + (item.price * item.quantity), 0);
+            const deliveryFee = 1500;
+            subtotalEl.textContent = formatNaira(subtotal);
+            grandTotalEl.textContent = formatNaira(subtotal + deliveryFee);
+
+            // Payment selection
+            document.querySelectorAll('.payment-card').forEach(card => {
+                card.addEventListener('click', () => {
+                    document.querySelectorAll('.payment-card').forEach(c => c.classList.remove('active'));
+                    card.classList.add('active');
+                    card.querySelector('input').checked = true;
+                });
+            });
+
+            // Form submission
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const order = {
+                    id: `MBK-${Date.now().toString().slice(-6)}`,
+                    customer: {
+                        name: document.getElementById('name').value.trim(),
+                        phone: document.getElementById('phone').value.trim(),
+                        address: document.getElementById('address').value.trim(),
+                        notes: document.getElementById('notes').value.trim()
+                    },
+                    payment: document.querySelector('input[name="payment"]:checked').value,
+                    items: cart,
+                    subtotal,
+                    deliveryFee,
+                    total: subtotal + deliveryFee,
+                    createdAt: new Date().toISOString()
+                };
+                localStorage.setItem('mbk_last_order', JSON.stringify(order));
+                localStorage.removeItem('mbk_cart');
+                updateCartCount();
+                modal.style.display = 'flex';
+            });
+
+            document.getElementById('return-home').addEventListener('click', () => {
+                window.location.href = '../index.html';
+            });
+        });
+    </script>
+</body>
+</html>
