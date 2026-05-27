@@ -10,6 +10,8 @@ const router = require("./route");
 const pool = require("./config/database.config");
 const requestLogger = require("./middleware/requestLogger");
 const logger = require("./config/logger");
+const httpStatus = require("./constants/httpStatus");
+const { swaggerUi, swaggerSpec } = require("./config/swagger");
 
 const app = express();
 
@@ -20,11 +22,13 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(express.static(path.join(__dirname, "../public")));
 
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
 app.use(requestLogger);
 
 app.get("/healthz", (req, res) => {
     res.json({
-        status: 200,
+        status: httpStatus.OK,
         ip: req.ip,
         msg: "Server health check 100%"
     });

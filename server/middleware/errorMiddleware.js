@@ -1,7 +1,8 @@
 const logger = require("../config/logger");
+const httpStatus = require("../constants/httpStatus");
 
 function notFound(req, res, next) {
-    res.status(404);
+    res.status(httpStatus.NOT_FOUND);
 
     const error = new Error(`Route not found - ${req.originalUrl}`);
 
@@ -9,9 +10,9 @@ function notFound(req, res, next) {
 }
 
 function appError(err, req, res, next) {
-    const statusCode = res.statusCode !== 200
+    const statusCode = res.statusCode !== httpStatus.OK
         ? res.statusCode
-        : err.statusCode || 500;
+        : err.statusCode || httpStatus.SERVER_ERROR;
 
     // structured logging
     logger.error({
@@ -29,7 +30,7 @@ function appError(err, req, res, next) {
 
         message:
             process.env.NODE_ENV === "production"
-                ? statusCode === 500
+                ? statusCode === httpStatus.SERVER_ERROR
                     ? "Internal server error"
                     : err.message
                 : err.message,

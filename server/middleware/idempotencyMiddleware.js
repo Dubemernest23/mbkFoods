@@ -1,4 +1,5 @@
 const crypto = require("crypto");
+const httpStatus = require("../constants/httpStatus");
 
 function hashPayload(payload) {
     return crypto
@@ -19,7 +20,7 @@ function requireIdempotencyKey(req, res, next) {
     const key = req.headers["idempotency-key"];
 
     if (!key) {
-        return res.status(400).json({
+        return res.status(httpStatus.BAD_REQUEST).json({
             success: false,
             message: "Idempotency-Key header is required for this request"
         });

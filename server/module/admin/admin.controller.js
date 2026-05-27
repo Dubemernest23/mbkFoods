@@ -1,43 +1,84 @@
-const data = require("./admin.service");
+const adminService = require("./admin.service");
+const asyncHandler = require("../../shared/asyncHandler");
+const AppError = require("../../utils/AppError");
+const httpStatus = require("../../constants/httpStatus");
 
-const getAllAdmins = (req, res) => {
-    return res.status(200).json({
+const getAllAdmins = asyncHandler(async (req, res) => {
+    const admins = await adminService.findAll();
+    return res.status(httpStatus.OK).json({
         success: true,
-        data: data,
-        count: data.length
+        data: admins,
+        count: admins.length
     });
-};
+});
 
-const getAdmin = (req, res) => {
-    const admin = data.find((item) => item.id === Number(req.params.id));
+const getAdmin = asyncHandler(async (req, res) => {
+    const admin = await adminService.findById(req.params.id);
 
     if (!admin) {
-        return res.status(404).json({ success: false, message: "Admin not found" });
+        throw new AppError("Admin not found", httpStatus.NOT_FOUND);
     }
 
-    return res.status(200).json({ success: true, data: admin });
-};
-
-const createAdmin = (req, res) => {
-    return res.status(501).json({
-        success: false,
-        message: "Admin creation will be wired to the database in the next backend pass."
+    return res.status(httpStatus.OK).json({ 
+        success: true, 
+        data: admin 
     });
-};
+});
 
-const updateAdmin = (req, res) => {
-    return res.status(501).json({
-        success: false,
-        message: "Admin updates will be wired to the database in the next backend pass."
+const createAdmin = asyncHandler(async (req, res) => {
+    const { full_name, email, phone, password, role } = req.body;
+    
+    if (!full_name || !email || !password) {
+        throw new AppError("Missing required fields: full_name, email, password", httpStatus.BAD_REQUEST);
+    }
+    
+    // Check if email already registered
+    const existing = await adminService.findByEmail(email);
+    if (existing) {
+        throw new AppError("Email is already registered", httpStatus.BAD_REQUEST);
+    }
+    
+    const newAdmin = await adminService.create({
+        full_name,
+        email,
+        phone,
+        password,
+        role
     });
-};
+    
+    return res.status(httpStatus.CREATED).json({
+        success: true,
+        message: "Admin created successfully",
+        data: newAdmin
+    });
+});
 
-const deleteAdmin = (req, res) => {
-    return res.status(501).json({
-        success: false,
-        message: "Admin deletion will be wired to the database in the next backend pass."
+const updateAdmin = asyncHandler(async (req, res) => {
+    const admin = await adminService.findById(req.params.id);
+    if (!admin) {
+        throw new AppError("Admin not found", httpStatus.NOT_FOUND);
+    }
+    
+    const updated = await adminService.update(req.params.id, req.body);
+    return res.status(httpStatus.OK).json({
+        success: true,
+        message: "Admin updated successfully",
+        data: updated
     });
-};
+});
+
+const deleteAdmin = asyncHandler(async (req, res) => {
+    const admin = await adminService.findById(req.params.id);
+    if (!admin) {
+        throw new AppError("Admin not found", httpStatus.NOT_FOUND);
+    }
+    
+    await adminService.deleteById(req.params.id);
+    return res.status(httpStatus.OK).json({
+        success: true,
+        message: "Admin deleted successfully"
+    });
+});
 
 module.exports = {
     createAdmin,

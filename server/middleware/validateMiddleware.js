@@ -1,3 +1,5 @@
+const httpStatus = require("../constants/httpStatus")
+
 function validate(schema) {
     return (req, res, next) => {
         const result = schema.safeParse({
@@ -7,7 +9,7 @@ function validate(schema) {
         });
 
         if (!result.success) {
-            return res.status(400).json({
+            return res.status(httpStatus.BAD_REQUEST).json({
                 success: false,
                 message: "Validation failed",
                 errors: result.error.flatten()
